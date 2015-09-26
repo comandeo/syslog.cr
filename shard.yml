@@ -1,0 +1,7 @@
+name: syslog
+version: 0.1.0
+
+authors:
+  - Dmitry Rybakov <dmitry.rybakov@gmail.com>
+
+license: MIT
