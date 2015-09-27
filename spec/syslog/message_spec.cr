@@ -12,6 +12,6 @@ describe Syslog::Message do
       "message"
     )
     message.to_s(io)
-    io.to_s.should eq("<01>timestamp hostname appname: message")
+    io.to_s.should eq("<01>timestamp hostname appname [#{Process.pid}]: [ALERT] message")
   end
 end

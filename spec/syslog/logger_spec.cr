@@ -12,7 +12,8 @@ describe Syslog::Logger do
         syslog_host: "localhost",
         syslog_port: 1234
       )
-      expected_message = "<206>#{time_formatter.format(Time.new)} localhost : Hello, world! We use remote syslog!"
+      expected_message = "<206>#{time_formatter.format(Time.new)} localhost \
+        [#{Process.pid}]: [INFO] Hello, world! We use remote syslog!"
       logger.info("Hello, world! We use remote syslog!")
       message = server.read(expected_message.bytesize)
       server.close
@@ -31,7 +32,8 @@ describe Syslog::Logger do
       syslog_host: "localhost",
       syslog_port: 1234
     )
-    expected_message = "<176>#{time_formatter.format(Time.new)} localhost : Hello, world! We use remote syslog!"
+    expected_message = "<176>#{time_formatter.format(Time.new)} localhost \
+      [#{Process.pid}]: [INFO] Hello, world! We use remote syslog!"
     logger.info("Hello, world! We use remote syslog!")
     message = server.read(expected_message.bytesize)
     server.close
@@ -49,7 +51,8 @@ describe Syslog::Logger do
       syslog_host: "localhost",
       syslog_port: 1234
     )
-    expected_message = "<206>#{time_formatter.format(Time.new)} app.company.com : Hello, world! We use remote syslog!"
+    expected_message = "<206>#{time_formatter.format(Time.new)} app.company.com \
+      [#{Process.pid}]: [INFO] Hello, world! We use remote syslog!"
     logger.info("Hello, world! We use remote syslog!")
     message = server.read(expected_message.bytesize)
     server.close
@@ -67,7 +70,8 @@ describe Syslog::Logger do
       syslog_host: "localhost",
       syslog_port: 1234
     )
-    expected_message = "<206>#{time_formatter.format(Time.new)} localhost GreatApp: Hello, world! We use remote syslog!"
+    expected_message = "<206>#{time_formatter.format(Time.new)} localhost \
+      GreatApp [#{Process.pid}]: [INFO] Hello, world! We use remote syslog!"
     logger.info("Hello, world! We use remote syslog!")
     message = server.read(expected_message.bytesize)
     server.close
