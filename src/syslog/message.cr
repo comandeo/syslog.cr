@@ -6,13 +6,18 @@ module Syslog
       @severity : Severity,
       @timestamp : String,
       @hostname : String,
-      @appname : String,
+      @appname : (String | Nil),
       @message : String
     )
     end
 
      def to_s(io : IO)
-       io << "<#{@facility.value}#{@severity.value}>#{@timestamp} #{@hostname} #{@appname}: #{@message}"
+       io << "<#{@facility.value}#{@severity.value}>#{@timestamp} #{@hostname} "
+       if @appname
+         io << "#{@appname} "
+       end
+       io << "[#{Process.pid}]: "
+       io << "[#{@severity}] #{@message}"
      end
   end
 end

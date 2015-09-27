@@ -10,7 +10,7 @@ module Syslog
 
     def initialize(
       @hostname = "localhost",
-      @appname = "",
+      @appname = nil,
       @facility = Facility::LOCAL4,
       @remote = false,
       @syslog_host = "localhost",
