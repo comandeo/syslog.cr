@@ -8,9 +8,10 @@ describe Syslog::Message do
       Syslog::Severity::ALERT,
       "timestamp",
       "hostname",
+      "appname",
       "message"
     )
     message.to_s(io)
-    io.to_s.should eq("<01> timestamp hostname message")
+    io.to_s.should eq("<01>timestamp hostname appname: message")
   end
 end
