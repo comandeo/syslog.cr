@@ -19,25 +19,27 @@ dependencies:
 
 ```crystal
 require "syslog"
-# Use defaults:
-# - syslog host: localhost
+# Use local syslog with defaults:
+# - logging to `/dev/log`
 # - syslog port: 514
 # - log level: INFO
 # - application hostname: localhost
+# - application name: ""
 # - syslog facility: local4
+# - log level: INFO
 logger = Syslog::Logger.new
-logger.info("Something happened")
+logger.info("Something interesting happened")
 
-# Use custom params
+# Use remote syslog with some custom params
 logger = Syslog::Logger.new(
-    "logger.company.com",
-    1234,
-    Syslog::Severity::WARNING,
-    "application.company.com",
-    Syslog::Facility::USER
+    remote: true,
+    syslog_host: "logger.company.com",
+    syslog_port: 1234,
+    appname: "application.company.com",
+    facility: Syslog::Facility::USER
 )
 
-logger.error("Something happened")
+logger.error("Something bad happened")
 
 ```
 ## Contributing
