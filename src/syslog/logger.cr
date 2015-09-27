@@ -4,81 +4,74 @@ module Syslog
   class Logger
     @@time_formatter = Time::Format.new("%b %d %H:%M:%S")
 
-    # Maximum severity level that will be logged
+    @socket :: Socket+
+
     property :level
 
     def initialize(
-      host = "localhost",
-      port = 514,
-      level = Severity::INFO,
-      hostname = "localhost",
-      facility = Facility::LOCAL4
+      @hostname = "localhost",
+      @appname = "",
+      @facility = Facility::LOCAL4,
+      @remote = false,
+      @syslog_host = "localhost",
+      @syslog_port = 514
     )
-      @socket = UDPSocket.new
-      @socket.connect(host, port)
-      @level = level
-      @hostname = hostname
-      @facility = facility
+    @level = Severity::INFO
+      if remote
+        udp_socket = UDPSocket.new
+        udp_socket.connect(@syslog_host, @syslog_port)
+        @socket = udp_socket
+      else
+        @socket  = UNIXSocket.new("/dev/log", Socket::Type::DGRAM)
+      end
     end
 
     def emergency(message : String)
-      if Severity::EMERGENCY <= @level
-        log(Severity::EMERGENCY, message)
-      end
+      log(Severity::EMERGENCY, message)
     end
 
     def alert(message : String)
-      if Severity::ALERT <= @level
-        log(Severity::ALERT, message)
-      end
+      log(Severity::ALERT, message)
     end
 
     def critical(message : String)
-      if Severity::CRITICAL <= @level
-        log(Severity::CRITICAL, message)
-      end
+      log(Severity::CRITICAL, message)
     end
 
     def error(message : String)
-      if Severity::ERROR <= @level
-        log(Severity::ERROR, message)
-      end
+      log(Severity::ERROR, message)
     end
 
     def warn(message : String)
-      if Severity::WARNING <= @level
-        log(Severity::WARNING, message)
-      end
+      log(Severity::WARNING, message)
     end
 
     def notice(message : String)
-      if Severity::EMERGENCY <= @level
-        log(Severity::EMERGENCY, message)
-      end
+      log(Severity::EMERGENCY, message)
     end
 
     def info(message : String)
-      if Severity::INFO <= @level
-        log(Severity::INFO, message)
-      end
+      log(Severity::INFO, message)
     end
 
     def debug(message : String)
-      if Severity::DEBUG <= @level
-        log(Severity::DEBUG, message)
-      end
+    log(Severity::DEBUG, message)
     end
 
     private def log(severity : Severity, message : String)
+      return if severity.value > @level.value
+
       timestamp = @@time_formatter.format(Time.new)
       message = Message.new(
         @facility,
         severity,
         timestamp,
         @hostname,
+        @appname,
         message
       )
-      @socket << message
+      @socket << message.to_s
+      @socket.flush
     end
 
   end
