@@ -1,9 +1,7 @@
-# Crystal Memcached
+# Syslog.cr
 [![Build Status](https://travis-ci.org/comandeo/syslog.cr.svg?branch=master)](https://travis-ci.org/comandeo/syslog.cr)
 
-# syslog.cr
-
-Syslog client implementation for Crystal
+Syslog client implementation for Crystal (work in progress!)
 
 ## Installation
 
