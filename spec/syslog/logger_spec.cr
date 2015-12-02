@@ -77,5 +77,4 @@ describe Syslog::Logger do
     server.close
     message.should eq(expected_message)
   end
-
 end
