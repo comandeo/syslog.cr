@@ -9,20 +9,19 @@ module Syslog
     property :level
 
     def initialize(
-      @hostname = "localhost",
-      @appname = nil,
-      @facility = Facility::LOCAL4,
-      @remote = false,
-      @syslog_host = "localhost",
-      @syslog_port = 514
-    )
-    @level = Severity::INFO
+                   @hostname = "localhost",
+                   @appname = nil,
+                   @facility = Facility::LOCAL4,
+                   @remote = false,
+                   @syslog_host = "localhost",
+                   @syslog_port = 514)
+      @level = Severity::INFO
       if remote
         udp_socket = UDPSocket.new
         udp_socket.connect(@syslog_host, @syslog_port)
         @socket = udp_socket
       else
-        @socket  = UNIXSocket.new("/dev/log", Socket::Type::DGRAM)
+        @socket = UNIXSocket.new("/dev/log", Socket::Type::DGRAM)
       end
     end
 
@@ -55,7 +54,7 @@ module Syslog
     end
 
     def debug(message : String)
-    log(Severity::DEBUG, message)
+      log(Severity::DEBUG, message)
     end
 
     private def log(severity : Severity, message : String)
@@ -73,6 +72,5 @@ module Syslog
       @socket << message.to_s
       @socket.flush
     end
-
   end
 end

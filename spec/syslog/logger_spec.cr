@@ -15,7 +15,7 @@ describe Syslog::Logger do
       expected_message = "<206>#{time_formatter.format(Time.new)} localhost \
         [#{Process.pid}]: [INFO] Hello, world! We use remote syslog!"
       logger.info("Hello, world! We use remote syslog!")
-      message = server.read(expected_message.bytesize)
+      message = server.gets(expected_message.bytesize)
       server.close
       message.should eq(expected_message)
     end
@@ -35,7 +35,7 @@ describe Syslog::Logger do
     expected_message = "<176>#{time_formatter.format(Time.new)} localhost \
       [#{Process.pid}]: [INFO] Hello, world! We use remote syslog!"
     logger.info("Hello, world! We use remote syslog!")
-    message = server.read(expected_message.bytesize)
+    message = server.gets(expected_message.bytesize)
     server.close
     message.should eq(expected_message)
   end
@@ -54,7 +54,7 @@ describe Syslog::Logger do
     expected_message = "<206>#{time_formatter.format(Time.new)} app.company.com \
       [#{Process.pid}]: [INFO] Hello, world! We use remote syslog!"
     logger.info("Hello, world! We use remote syslog!")
-    message = server.read(expected_message.bytesize)
+    message = server.gets(expected_message.bytesize)
     server.close
     message.should eq(expected_message)
   end
@@ -73,9 +73,8 @@ describe Syslog::Logger do
     expected_message = "<206>#{time_formatter.format(Time.new)} localhost \
       GreatApp [#{Process.pid}]: [INFO] Hello, world! We use remote syslog!"
     logger.info("Hello, world! We use remote syslog!")
-    message = server.read(expected_message.bytesize)
+    message = server.gets(expected_message.bytesize)
     server.close
     message.should eq(expected_message)
   end
-
 end

@@ -1,6 +1,6 @@
 module Syslog
   enum Facility
-    #kernel messages
+    # kernel messages
     KERNEL
     # user-level messages
     USER
