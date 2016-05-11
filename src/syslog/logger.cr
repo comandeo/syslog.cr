@@ -4,13 +4,13 @@ module Syslog
   class Logger
     @@time_formatter = Time::Format.new("%b %d %H:%M:%S")
 
-    @socket :: Socket+
+    @socket : Socket
 
-    property :level
+    @level : Syslog::Severity
 
     def initialize(
                    @hostname = "localhost",
-                   @appname = nil,
+                   @appname : String? = nil,
                    @facility = Facility::LOCAL4,
                    @remote = false,
                    @syslog_host = "localhost",
