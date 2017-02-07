@@ -2,7 +2,7 @@ require "../spec_helper"
 
 describe Syslog::Message do
   it "creates well formed message" do
-    io = MemoryIO.new
+    io = IO::Memory.new
     message = Syslog::Message.new(
       Syslog::Facility::KERNEL,
       Syslog::Severity::ALERT,
