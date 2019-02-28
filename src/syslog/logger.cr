@@ -6,16 +6,16 @@ module Syslog
 
     @socket : Socket
 
-    @level : Syslog::Severity
+    property :level
 
     def initialize(
                    @hostname = "localhost",
                    @appname : String? = nil,
                    @facility = Facility::LOCAL4,
+                   @level = Severity::INFO,
                    @remote = false,
                    @syslog_host = "localhost",
                    @syslog_port = 514)
-      @level = Severity::INFO
       if remote
         udp_socket = UDPSocket.new
         udp_socket.connect(@syslog_host, @syslog_port)

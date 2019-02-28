@@ -26,7 +26,6 @@ require "syslog"
 # - application hostname: localhost
 # - application name: ""
 # - syslog facility: local4
-# - log level: INFO
 logger = Syslog::Logger.new
 logger.info("Something interesting happened")
 
@@ -36,10 +35,16 @@ logger = Syslog::Logger.new(
     syslog_host: "logger.company.com",
     syslog_port: 1234,
     appname: "application.company.com",
-    facility: Syslog::Facility::USER
+    facility: Syslog::Facility::USER,
+    level: Syslog::Severity::WARN
 )
 
 logger.error("Something bad happened")
+
+# Set the log level
+logger.level = Syslog::Severity::DEBUG
+
+logger.debug("Some debug message")
 
 ```
 ## Contributing
